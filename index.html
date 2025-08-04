@@ -4,7 +4,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="author" content="Jeongman Park">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bear Ninja Hunter</title>
 </head>
 
@@ -13,114 +12,111 @@
   <p id="result"></p>
 
   <script>
-    // Available choices stored in an array   
+    // Store valid game choices in an array
     const choices = ["Bear", "Ninja", "Hunter"];
     let gameHistory = "";
     let playAgain = true;
 
+    // Loop through choices array 
+    for (let i = 0; i < choices.length; i++) {
+      console.log("Valid choice option:", choices[i]);
+    }
+
     //Welcome the player to the game using a prompt to collect their name:
     let playerName = prompt("Welcome to Bear Hunter Ninja! Please enter your name to get started:");
 
-    //Handle cases where user cancels or enters empty/whitespace name
+    // Handle cancel or empty input for player name 
     if (playerName === null || playerName.trim() === "") {
       alert("Please Press F5 to Play Again.");
-      document.getElementById("result").innerHTML = "Please Press F5 to Play Again.";
     } else {
       playerName = playerName.trim();
 
       //Alert to greet the player with a personalized message.
-      alert(`Hi ${playerName}! Let's play Bear Ninja Hunter!`);
+      alert(`Hello, ${playerName}! Let's play!!`);
 
+      // Loop to allow multiple rounds of gameplay
       while (playAgain) {
-        //Prompt the player's choice.
+        // Prompt the player's choice
         let playerChoice = prompt("Who are you: Bear, Ninja, or Hunter?");
 
-        //Check for empty or canceled input
+        // Handle cancel or empty input for player choice 
         if (playerChoice === null || playerChoice.trim() === "") {
           alert("Please Press F5 to Play Again.");
-          document.getElementById("result").innerHTML = "Please Press F5 to Play Again.";
           break;
         }
 
-        //Force case: lowercase then capitalize first letter
+        // Format input: make lowercase, then capitalize the first letter
         playerChoice = playerChoice.trim().toLowerCase();
         playerChoice = playerChoice.charAt(0).toUpperCase() + playerChoice.slice(1);
 
-        //Add code to handle invalid entry that is not one of the expected choices
+        // Validate input against available choices
         if (!choices.includes(playerChoice)) {
+          const errorMessage = "Invalid Entry<br>Please Press F5 to Play Again.";
+          document.getElementById("result").innerHTML += errorMessage + "<br><br>";
+          console.log("Invalid Entry. Please Press F5 to Play Again.");
           alert("Invalid Entry\nPlease Press F5 to Play Again.");
-          document.getElementById("result").innerHTML = "Invalid Entry<br>Please Press F5 to Play Again.";
           break;
         }
 
-        //Computer choice_randomized
+        // Randomly select computer's choice using array and Math.random()
         let randomIndex = Math.floor(Math.random() * choices.length);
         let computerChoice = choices[randomIndex];
 
-        //Variable to store game result message
-        let gameMessage = "";
-
-        //Determine the winner using conditionals
+        // Determine winner using conditional operations and switch statements
+        let gameResult = "";
         if (computerChoice === "Bear") {
           switch (playerChoice) {
             case "Bear":
-              gameMessage = "It's a Tie!!";
+              gameResult = "It's a tie!";
               break;
             case "Ninja":
-              gameMessage = "You Lose!!";
+              gameResult = "Computer wins!!";
               break;
             case "Hunter":
-              gameMessage = "You Win!!";
-              break;
-            default:
-              gameMessage = "Invalid input.";
+              gameResult = `${playerName}, You win!!`;
               break;
           }
         } else if (computerChoice === "Ninja") {
           switch (playerChoice) {
             case "Bear":
-              gameMessage = "You Win!!";
+              gameResult = `${playerName}, You win!!`;
               break;
             case "Ninja":
-              gameMessage = "It's a Tie!!";
+              gameResult = "It's a tie!";
               break;
             case "Hunter":
-              gameMessage = "You Lose!!";
-              break;
-            default:
-              gameMessage = "Invalid input.";
+              gameResult = "Computer wins!!";
               break;
           }
         } else if (computerChoice === "Hunter") {
           switch (playerChoice) {
             case "Bear":
-              gameMessage = "You Lose!!";
+              gameResult = "Computer wins!!";
               break;
             case "Ninja":
-              gameMessage = "You Win!!";
+              gameResult = `${playerName}, You win!!`;
               break;
             case "Hunter":
-              gameMessage = "It's a Tie!!";
-              break;
-            default:
-              gameMessage = "Invalid input.";
+              gameResult = "It's a tie!";
               break;
           }
         }
 
-        //Display the personalized game results to the html page and announce the winner, as determined by your conditional operations.
-        let roundMessage = `${playerName} you chose ${playerChoice}!<br><br>The computer chose ${computerChoice}!<br><br>${gameMessage}<br><br>`;
-        gameHistory += roundMessage;
+        // Display result on HTML page and store in history
+        let gameMessage = `${playerName}, You chose ${playerChoice}!<br><br>The computer chose ${computerChoice}!<br><br>${gameResult}<br><br>`;
+        gameHistory += gameMessage;
         document.getElementById("result").innerHTML = gameHistory;
 
-        //Log result to the browser console in the same line structure shown (with blank lines)
-        console.log(`${playerName} you chose ${playerChoice}!\n\nThe computer chose ${computerChoice}!\n\n${gameMessage}`);
+        // Log result to console
+        console.log(`${playerName}, You chose ${playerChoice}. The computer chose ${computerChoice}. ${gameResult}`);
 
-        //Use a prompt to ask Player to play again at the same time game results are displayed. Handle cancel/empty or non-"yes" response to end the session.
+        // Prompt player to play again
         let again = prompt(`${playerName}, would you like to play again, Yes or No?`);
+
+        // Handle cancel, empty, or "no" input for replay prompt
         if (again === null || again.trim() === "" || again.toLowerCase() !== "yes") {
           playAgain = false;
-          alert("Please Press F5 to Play Again.");
+          alert("Please Press F5 to play again.");
         }
       }
     }
