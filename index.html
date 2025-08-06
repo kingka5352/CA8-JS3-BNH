@@ -32,7 +32,7 @@
       playerName = playerName.trim();
 
       //Alert to greet the player with a personalized message.
-      alert(`Hello, ${playerName}! Let's play!!`);
+      alert(`Hi ${playerName}! Let's Play!!`);
 
       // Loop to allow multiple rounds of gameplay
       while (playAgain) {
@@ -52,7 +52,7 @@
         // Validate input against available choices
         if (!choices.includes(playerChoice)) {
           const errorMessage = "Invalid Entry<br>Please Press F5 to Play Again.";
-          document.getElementById("result").innerHTML += errorMessage + "<br><br>";
+          document.getElementById("result").innerHTML += errorMessage + "<br>";
           console.log("Invalid Entry. Please Press F5 to Play Again.");
           alert("Invalid Entry\nPlease Press F5 to Play Again.");
           break;
@@ -70,31 +70,31 @@
               gameResult = "It's a tie!";
               break;
             case "Ninja":
-              gameResult = "Computer wins!!";
+              gameResult = "You Lose!!";
               break;
             case "Hunter":
-              gameResult = `${playerName}, You win!!`;
+              gameResult = "You Win!!";
               break;
           }
         } else if (computerChoice === "Ninja") {
           switch (playerChoice) {
             case "Bear":
-              gameResult = `${playerName}, You win!!`;
+              gameResult = "You Win!!";
               break;
             case "Ninja":
               gameResult = "It's a tie!";
               break;
             case "Hunter":
-              gameResult = "Computer wins!!";
+              gameResult = "You Lose!!";
               break;
           }
         } else if (computerChoice === "Hunter") {
           switch (playerChoice) {
             case "Bear":
-              gameResult = "Computer wins!!";
+              gameResult = "You Lose!!";
               break;
             case "Ninja":
-              gameResult = `${playerName}, You win!!`;
+              gameResult = "You Win!!";
               break;
             case "Hunter":
               gameResult = "It's a tie!";
@@ -103,12 +103,19 @@
         }
 
         // Display result on HTML page and store in history
-        let gameMessage = `${playerName}, You chose ${playerChoice}!<br><br>The computer chose ${computerChoice}!<br><br>${gameResult}<br><br>`;
+        let gameMessage =
+          `${playerName} you chose ${playerChoice}!<br>` +
+          `The computer chose ${computerChoice}!<br>` +
+          `${gameResult}<br>`;
         gameHistory += gameMessage;
         document.getElementById("result").innerHTML = gameHistory;
 
         // Log result to console
-        console.log(`${playerName}, You chose ${playerChoice}. The computer chose ${computerChoice}. ${gameResult}`);
+        console.log(
+          `${playerName} you chose ${playerChoice}!\n` +
+          `The computer chose ${computerChoice}!\n` +
+          `${gameResult}`
+        );
 
         // Prompt player to play again
         let again = prompt(`${playerName}, would you like to play again, Yes or No?`);
@@ -116,7 +123,7 @@
         // Handle cancel, empty, or "no" input for replay prompt
         if (again === null || again.trim() === "" || again.toLowerCase() !== "yes") {
           playAgain = false;
-          alert("Please Press F5 to play again.");
+          alert("Please Press F5 to Play Again.");
         }
       }
     }
